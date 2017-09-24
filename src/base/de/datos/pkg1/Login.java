@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -15,8 +17,9 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
-    String To="";
-    String Mensaje="";
+
+    String To = "";
+    String Mensaje = "";
     Connection myConn = null;
     Statement myStmt = null;
 
@@ -79,18 +82,19 @@ public class Login extends javax.swing.JFrame {
         lbl_ModMec = new javax.swing.JLabel();
         lbl_SApMec = new javax.swing.JLabel();
         lbl_agMec = new javax.swing.JLabel();
-        txt_mecanico_pnombre = new javax.swing.JTextField();
-        txt_mecanico_papellido = new javax.swing.JTextField();
+        tf_primer_nombre = new javax.swing.JTextField();
+        tf_primer_apellido = new javax.swing.JTextField();
         cb_asesor_modif1 = new javax.swing.JComboBox<>();
-        txt_mecanico_snombre = new javax.swing.JTextField();
+        tf_segundo_nombre = new javax.swing.JTextField();
         lbl_elmMec = new javax.swing.JLabel();
-        txt_mecanico_sapellido = new javax.swing.JTextField();
+        tf_segundo_apellido = new javax.swing.JTextField();
         lbl_NumTelMec = new javax.swing.JLabel();
         cb_mecanico_eliminar = new javax.swing.JComboBox<>();
-        txt_mecanico_numtel = new javax.swing.JTextField();
-        lbl_idmec = new javax.swing.JLabel();
-        txt_idMecanico = new javax.swing.JTextField();
+        tf_num_telefono = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tf_id = new javax.swing.JTextField();
         lbl_fondoMec = new javax.swing.JLabel();
+        lbl_papMec1 = new javax.swing.JLabel();
         jd_principal_asesor = new javax.swing.JDialog();
         jLabel23 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -134,9 +138,9 @@ public class Login extends javax.swing.JFrame {
         lbl_login = new javax.swing.JLabel();
         lbl_user = new javax.swing.JLabel();
         lbl_Password = new javax.swing.JLabel();
-        txt_login_password = new javax.swing.JTextField();
         btn_login_ingresar = new javax.swing.JButton();
         txt_login_user = new javax.swing.JTextField();
+        txt_login_password = new javax.swing.JPasswordField();
         lbl_Fondo = new javax.swing.JLabel();
 
         jd_administador.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -247,7 +251,12 @@ public class Login extends javax.swing.JFrame {
         jd_admin_mecanicos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_mecanico_agregar.setText("Agregar");
-        jd_admin_mecanicos.getContentPane().add(btn_mecanico_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, -1, -1));
+        btn_mecanico_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_mecanico_agregarActionPerformed(evt);
+            }
+        });
+        jd_admin_mecanicos.getContentPane().add(btn_mecanico_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
 
         lbl_mecanico.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lbl_mecanico.setForeground(new java.awt.Color(255, 255, 255));
@@ -258,7 +267,7 @@ public class Login extends javax.swing.JFrame {
         lbl_papMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_papMec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_papMec.setText("Primer Nombre");
-        jd_admin_mecanicos.getContentPane().add(lbl_papMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 120, -1));
+        jd_admin_mecanicos.getContentPane().add(lbl_papMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 120, -1));
 
         btn_mecanico_modif.setText("Modificar");
         jd_admin_mecanicos.getContentPane().add(btn_mecanico_modif, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, -1, -1));
@@ -270,13 +279,13 @@ public class Login extends javax.swing.JFrame {
         lbl_SNomMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_SNomMec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_SNomMec.setText("Segundo Nombre");
-        jd_admin_mecanicos.getContentPane().add(lbl_SNomMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 120, -1));
+        jd_admin_mecanicos.getContentPane().add(lbl_SNomMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 120, -1));
 
         lbl_PapMec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_PapMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_PapMec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_PapMec.setText("Primer Apellido");
-        jd_admin_mecanicos.getContentPane().add(lbl_PapMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 130, -1));
+        jd_admin_mecanicos.getContentPane().add(lbl_PapMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 130, -1));
 
         lbl_ModMec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_ModMec.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,43 +297,47 @@ public class Login extends javax.swing.JFrame {
         lbl_SApMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_SApMec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_SApMec.setText("Segundo Apellido");
-        jd_admin_mecanicos.getContentPane().add(lbl_SApMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 130, -1));
+        jd_admin_mecanicos.getContentPane().add(lbl_SApMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 130, -1));
 
         lbl_agMec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_agMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_agMec.setText("Agregar Mecánico");
         jd_admin_mecanicos.getContentPane().add(lbl_agMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
-        jd_admin_mecanicos.getContentPane().add(txt_mecanico_pnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 150, 20));
-        jd_admin_mecanicos.getContentPane().add(txt_mecanico_papellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 150, 20));
+        jd_admin_mecanicos.getContentPane().add(tf_primer_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 150, 20));
+        jd_admin_mecanicos.getContentPane().add(tf_primer_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 150, 20));
 
         jd_admin_mecanicos.getContentPane().add(cb_asesor_modif1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 199, -1));
-        jd_admin_mecanicos.getContentPane().add(txt_mecanico_snombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 150, 20));
+        jd_admin_mecanicos.getContentPane().add(tf_segundo_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 150, 20));
 
         lbl_elmMec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_elmMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_elmMec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_elmMec.setText("Eliminar Mecánico");
         jd_admin_mecanicos.getContentPane().add(lbl_elmMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, -1, -1));
-        jd_admin_mecanicos.getContentPane().add(txt_mecanico_sapellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 150, 20));
+        jd_admin_mecanicos.getContentPane().add(tf_segundo_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 150, 20));
 
         lbl_NumTelMec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_NumTelMec.setForeground(new java.awt.Color(255, 255, 255));
         lbl_NumTelMec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_NumTelMec.setText("Numero de Telefono");
-        jd_admin_mecanicos.getContentPane().add(lbl_NumTelMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        jd_admin_mecanicos.getContentPane().add(lbl_NumTelMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         jd_admin_mecanicos.getContentPane().add(cb_mecanico_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 199, -1));
-        jd_admin_mecanicos.getContentPane().add(txt_mecanico_numtel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 150, 20));
+        jd_admin_mecanicos.getContentPane().add(tf_num_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 150, 20));
 
-        lbl_idmec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lbl_idmec.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_idmec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_idmec.setText("Identificador");
-        jd_admin_mecanicos.getContentPane().add(lbl_idmec, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
-        jd_admin_mecanicos.getContentPane().add(txt_idMecanico, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 150, -1));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("ID:");
+        jd_admin_mecanicos.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, -1, -1));
+        jd_admin_mecanicos.getContentPane().add(tf_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 150, -1));
 
         lbl_fondoMec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotos/NaranjaOscuro.jpg"))); // NOI18N
-        jd_admin_mecanicos.getContentPane().add(lbl_fondoMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 420));
+        jd_admin_mecanicos.getContentPane().add(lbl_fondoMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 470));
+
+        lbl_papMec1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lbl_papMec1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_papMec1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_papMec1.setText("Primer Nombre");
+        jd_admin_mecanicos.getContentPane().add(lbl_papMec1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 120, -1));
 
         javax.swing.GroupLayout jd_principal_asesorLayout = new javax.swing.GroupLayout(jd_principal_asesor.getContentPane());
         jd_principal_asesor.getContentPane().setLayout(jd_principal_asesorLayout);
@@ -509,7 +522,6 @@ public class Login extends javax.swing.JFrame {
         lbl_Password.setForeground(new java.awt.Color(255, 255, 255));
         lbl_Password.setText("PASSWORD");
         getContentPane().add(lbl_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
-        getContentPane().add(txt_login_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 120, -1));
 
         btn_login_ingresar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         btn_login_ingresar.setText("INGRESAR");
@@ -520,6 +532,7 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(btn_login_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 120, 30));
         getContentPane().add(txt_login_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 120, -1));
+        getContentPane().add(txt_login_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 120, -1));
 
         lbl_Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotos/ColorAzul.jpg"))); // NOI18N
         getContentPane().add(lbl_Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 380));
@@ -556,6 +569,32 @@ public class Login extends javax.swing.JFrame {
         this.jd_ModificarEstado.setLocationRelativeTo(null);
         this.jd_ModificarEstado.setVisible(true);
     }//GEN-LAST:event_btn_ModificarEstadoCitaActionPerformed
+
+    private void btn_mecanico_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mecanico_agregarActionPerformed
+        try {
+            // TODO add your handling code here:
+            String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono;
+            id_empleado = tf_id.getText();
+            primer_nombre = tf_primer_nombre.getText();
+            segundo_nombre = tf_segundo_nombre.getText();
+            primer_apellido = tf_primer_apellido.getText();
+            segundo_apellido = tf_segundo_apellido.getText();
+            num_telefono = tf_num_telefono.getText();
+            
+            String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor)"
+                    + "values  ('"+id_empleado+"','"+primer_nombre+"','"+segundo_nombre+"','"+primer_apellido+"','"+segundo_apellido+"','"+num_telefono+"','M1')";
+            myStmt.executeUpdate(sql);
+            JOptionPane.showMessageDialog(this, "Mecanico Agregado exitosamente");
+            tf_id.setText("");
+            tf_primer_nombre.setText("");
+            tf_segundo_nombre.setText("");
+            tf_primer_apellido.setText("");
+            tf_segundo_apellido.setText("");
+            tf_num_telefono.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_mecanico_agregarActionPerformed
     public void SendMail() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -564,18 +603,18 @@ public class Login extends javax.swing.JFrame {
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {                    
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("jordi.mairena@gmail.com","iexterminator159");
-                    }
-                });
+                new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("jordi.mairena@gmail.com", "iexterminator159");
+            }
+        });
 
         try {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("jordi.mairena@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(To));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(To));
             message.setSubject("Informe Sobre la cita");
             message.setText(Mensaje);
 
@@ -586,6 +625,7 @@ public class Login extends javax.swing.JFrame {
             throw new RuntimeException(e);
         }
     }
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -637,6 +677,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_asesor_modif1;
     private javax.swing.JComboBox<String> cb_mecanico_eliminar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JDialog jd_ModificarEstado;
@@ -672,7 +713,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_fondoMec;
     private javax.swing.JLabel lbl_fondoModEstado;
     private javax.swing.JLabel lbl_idenAse;
-    private javax.swing.JLabel lbl_idmec;
     private javax.swing.JLabel lbl_login;
     private javax.swing.JLabel lbl_mecanico;
     private javax.swing.JLabel lbl_modAses;
@@ -684,12 +724,19 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_papAse;
     private javax.swing.JLabel lbl_papCi;
     private javax.swing.JLabel lbl_papMec;
+    private javax.swing.JLabel lbl_papMec1;
     private javax.swing.JLabel lbl_pnomAes;
     private javax.swing.JLabel lbl_sapAses;
     private javax.swing.JLabel lbl_sapci;
     private javax.swing.JLabel lbl_snomAse;
     private javax.swing.JLabel lbl_tipoRep;
     private javax.swing.JLabel lbl_user;
+    private javax.swing.JTextField tf_id;
+    private javax.swing.JTextField tf_num_telefono;
+    private javax.swing.JTextField tf_primer_apellido;
+    private javax.swing.JTextField tf_primer_nombre;
+    private javax.swing.JTextField tf_segundo_apellido;
+    private javax.swing.JTextField tf_segundo_nombre;
     private javax.swing.JTextField txt_EstadoActualCita;
     private javax.swing.JTextField txt_PApCita;
     private javax.swing.JTextField txt_PNomCita;
@@ -705,13 +752,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField txt_asesores_sapellido;
     private javax.swing.JTextField txt_asesores_snombre;
     private javax.swing.JTextField txt_idAsesor;
-    private javax.swing.JTextField txt_idMecanico;
-    private javax.swing.JTextField txt_login_password;
+    private javax.swing.JPasswordField txt_login_password;
     private javax.swing.JTextField txt_login_user;
-    private javax.swing.JTextField txt_mecanico_numtel;
-    private javax.swing.JTextField txt_mecanico_papellido;
-    private javax.swing.JTextField txt_mecanico_pnombre;
-    private javax.swing.JTextField txt_mecanico_sapellido;
-    private javax.swing.JTextField txt_mecanico_snombre;
     // End of variables declaration//GEN-END:variables
 }//FIn de la clase
