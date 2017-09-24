@@ -3,8 +3,10 @@ package base.de.datos.pkg1;
 import javax.mail.PasswordAuthentication;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +16,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -32,6 +35,15 @@ public class Login extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }//Fin del try catch
+
+        //separando los mecanicos y asesores
+        for (int i = 0; i < empleados.size(); i++) {
+            if (empleados.get(i).getId_asesor().equals("M1")) {
+                mecanicos.add(empleados.get(i));
+            } else {
+                asesores.add(empleados.get(i));
+            }
+        }
 
         initComponents();
         this.setTitle("Login");
@@ -54,22 +66,22 @@ public class Login extends javax.swing.JFrame {
         lbl_snomAse = new javax.swing.JLabel();
         lbl_papAse = new javax.swing.JLabel();
         lbl_sapAses = new javax.swing.JLabel();
-        txt_asesores_pnombre = new javax.swing.JTextField();
-        txt_asesores_papellido = new javax.swing.JTextField();
-        txt_asesores_snombre = new javax.swing.JTextField();
-        txt_asesores_sapellido = new javax.swing.JTextField();
+        tf_primer_nombrea = new javax.swing.JTextField();
+        tf_primer_apellidoa = new javax.swing.JTextField();
+        tf_segundo_nombrea = new javax.swing.JTextField();
+        tf_segundo_apellidoa = new javax.swing.JTextField();
         lbl_numTelAse = new javax.swing.JLabel();
-        txt_asesores_numtel = new javax.swing.JTextField();
+        tf_num_telefonoa = new javax.swing.JTextField();
         btn_asesores_agregar = new javax.swing.JButton();
         btn_asesor_modif = new javax.swing.JButton();
         btn_asesor_eliminar = new javax.swing.JButton();
         lbl_modAses = new javax.swing.JLabel();
         lbl_agrgAse = new javax.swing.JLabel();
-        cb_asesor_modif = new javax.swing.JComboBox<>();
+        cb_asesor = new javax.swing.JComboBox<>();
         lbl_EliAse = new javax.swing.JLabel();
         cb_asesor_eliminar = new javax.swing.JComboBox<>();
         lbl_idenAse = new javax.swing.JLabel();
-        txt_idAsesor = new javax.swing.JTextField();
+        tf_ida = new javax.swing.JTextField();
         lbl_fondoAse = new javax.swing.JLabel();
         jd_admin_mecanicos = new javax.swing.JDialog();
         btn_mecanico_agregar = new javax.swing.JButton();
@@ -84,7 +96,7 @@ public class Login extends javax.swing.JFrame {
         lbl_agMec = new javax.swing.JLabel();
         tf_primer_nombre = new javax.swing.JTextField();
         tf_primer_apellido = new javax.swing.JTextField();
-        cb_asesor_modif1 = new javax.swing.JComboBox<>();
+        cb_mecanico = new javax.swing.JComboBox<>();
         tf_segundo_nombre = new javax.swing.JTextField();
         lbl_elmMec = new javax.swing.JLabel();
         tf_segundo_apellido = new javax.swing.JTextField();
@@ -176,38 +188,43 @@ public class Login extends javax.swing.JFrame {
         lbl_pnomAes.setForeground(new java.awt.Color(255, 255, 255));
         lbl_pnomAes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_pnomAes.setText("Primer Nombre");
-        jd_admin_asesores.getContentPane().add(lbl_pnomAes, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 75, 129, -1));
+        jd_admin_asesores.getContentPane().add(lbl_pnomAes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 129, 20));
 
         lbl_snomAse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_snomAse.setForeground(new java.awt.Color(255, 255, 255));
         lbl_snomAse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_snomAse.setText("Segundo Nombre");
-        jd_admin_asesores.getContentPane().add(lbl_snomAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 117, 129, -1));
+        jd_admin_asesores.getContentPane().add(lbl_snomAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 129, -1));
 
         lbl_papAse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_papAse.setForeground(new java.awt.Color(255, 255, 255));
         lbl_papAse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_papAse.setText("Primer Apellido");
-        jd_admin_asesores.getContentPane().add(lbl_papAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 173, 120, -1));
+        jd_admin_asesores.getContentPane().add(lbl_papAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 120, -1));
 
         lbl_sapAses.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_sapAses.setForeground(new java.awt.Color(255, 255, 255));
         lbl_sapAses.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_sapAses.setText("Segundo Apellido");
-        jd_admin_asesores.getContentPane().add(lbl_sapAses, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 216, 120, -1));
-        jd_admin_asesores.getContentPane().add(txt_asesores_pnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 73, 150, -1));
-        jd_admin_asesores.getContentPane().add(txt_asesores_papellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 171, 150, -1));
-        jd_admin_asesores.getContentPane().add(txt_asesores_snombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 115, 150, -1));
-        jd_admin_asesores.getContentPane().add(txt_asesores_sapellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 214, 150, -1));
+        jd_admin_asesores.getContentPane().add(lbl_sapAses, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 120, -1));
+        jd_admin_asesores.getContentPane().add(tf_primer_nombrea, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 150, -1));
+        jd_admin_asesores.getContentPane().add(tf_primer_apellidoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 150, -1));
+        jd_admin_asesores.getContentPane().add(tf_segundo_nombrea, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 150, -1));
+        jd_admin_asesores.getContentPane().add(tf_segundo_apellidoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 150, -1));
 
         lbl_numTelAse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_numTelAse.setForeground(new java.awt.Color(255, 255, 255));
         lbl_numTelAse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_numTelAse.setText("Numero de Telefono");
-        jd_admin_asesores.getContentPane().add(lbl_numTelAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 265, -1, -1));
-        jd_admin_asesores.getContentPane().add(txt_asesores_numtel, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 263, 150, -1));
+        jd_admin_asesores.getContentPane().add(lbl_numTelAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        jd_admin_asesores.getContentPane().add(tf_num_telefonoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 150, -1));
 
         btn_asesores_agregar.setText("Agregar");
+        btn_asesores_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_asesores_agregarActionPerformed(evt);
+            }
+        });
         jd_admin_asesores.getContentPane().add(btn_asesores_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, -1, -1));
 
         btn_asesor_modif.setText("Modificar");
@@ -228,7 +245,7 @@ public class Login extends javax.swing.JFrame {
         lbl_agrgAse.setText("Agregar Asesor");
         jd_admin_asesores.getContentPane().add(lbl_agrgAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 22, -1, -1));
 
-        jd_admin_asesores.getContentPane().add(cb_asesor_modif, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 214, -1));
+        jd_admin_asesores.getContentPane().add(cb_asesor, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 214, -1));
 
         lbl_EliAse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_EliAse.setForeground(new java.awt.Color(255, 255, 255));
@@ -240,9 +257,9 @@ public class Login extends javax.swing.JFrame {
 
         lbl_idenAse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_idenAse.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_idenAse.setText("Identificador");
-        jd_admin_asesores.getContentPane().add(lbl_idenAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
-        jd_admin_asesores.getContentPane().add(txt_idAsesor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, 150, -1));
+        lbl_idenAse.setText("ID");
+        jd_admin_asesores.getContentPane().add(lbl_idenAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
+        jd_admin_asesores.getContentPane().add(tf_ida, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 150, -1));
 
         lbl_fondoAse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotos/NaranjaOscuro.jpg"))); // NOI18N
         lbl_fondoAse.setText("jLabel1");
@@ -306,7 +323,7 @@ public class Login extends javax.swing.JFrame {
         jd_admin_mecanicos.getContentPane().add(tf_primer_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 150, 20));
         jd_admin_mecanicos.getContentPane().add(tf_primer_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 150, 20));
 
-        jd_admin_mecanicos.getContentPane().add(cb_asesor_modif1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 199, -1));
+        jd_admin_mecanicos.getContentPane().add(cb_mecanico, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 199, -1));
         jd_admin_mecanicos.getContentPane().add(tf_segundo_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 150, 20));
 
         lbl_elmMec.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -580,9 +597,9 @@ public class Login extends javax.swing.JFrame {
             primer_apellido = tf_primer_apellido.getText();
             segundo_apellido = tf_segundo_apellido.getText();
             num_telefono = tf_num_telefono.getText();
-            
+
             String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor)"
-                    + "values  ('"+id_empleado+"','"+primer_nombre+"','"+segundo_nombre+"','"+primer_apellido+"','"+segundo_apellido+"','"+num_telefono+"','M1')";
+                    + "values  ('" + id_empleado + "','" + primer_nombre + "','" + segundo_nombre + "','" + primer_apellido + "','" + segundo_apellido + "','" + num_telefono + "','M1')";
             myStmt.executeUpdate(sql);
             JOptionPane.showMessageDialog(this, "Mecanico Agregado exitosamente");
             tf_id.setText("");
@@ -591,10 +608,71 @@ public class Login extends javax.swing.JFrame {
             tf_primer_apellido.setText("");
             tf_segundo_apellido.setText("");
             tf_num_telefono.setText("");
+
+            Empleado combo;
+            String empleado_id = "";
+            String sql1 = "SELECT * FROM empleado";
+            ResultSet rs = myStmt.executeQuery(sql1);
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            model.addElement("--Seleccione un mecanico--");
+            while (rs.next()) {
+                id_empleado = rs.getString("Id_Empleado");
+                primer_nombre = rs.getString("Primer_Nombre");
+                segundo_nombre = rs.getString("Segundo_Nombre");
+                primer_apellido = rs.getString("Primer_Apellido");
+                segundo_apellido = rs.getString("Segundo_Apellido");
+                num_telefono = rs.getString("Tel_asignado");
+                empleado_id = rs.getString("Empleado_Id_Asesor");
+                combo = new Empleado(id_empleado, empleado_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono);
+                model.addElement(combo);
+            }
+            cb_asesor.setModel(model);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_mecanico_agregarActionPerformed
+
+    private void btn_asesores_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asesores_agregarActionPerformed
+        try {
+            String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono;
+            id_empleado = tf_ida.getText();
+            primer_nombre = tf_primer_nombrea.getText();
+            segundo_nombre = tf_segundo_nombrea.getText();
+            primer_apellido = tf_primer_apellidoa.getText();
+            segundo_apellido = tf_segundo_apellidoa.getText();
+            num_telefono = tf_num_telefonoa.getText();
+            String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor)"
+                    + "values  ('" + id_empleado + "','" + primer_nombre + "','" + segundo_nombre + "','" + primer_apellido + "','" + segundo_apellido + "','" + num_telefono + "','" + id_empleado + "')";
+            myStmt.executeUpdate(sql);
+            JOptionPane.showMessageDialog(this, "Asesor Agregado exitosamente");
+            tf_id.setText("");
+            tf_primer_nombre.setText("");
+            tf_segundo_nombre.setText("");
+            tf_primer_apellido.setText("");
+            tf_segundo_apellido.setText("");
+            tf_num_telefono.setText("");
+            Empleado combo;
+            String empleado_id = "";
+            String sql1 = "SELECT * FROM empleado";
+            ResultSet rs = myStmt.executeQuery(sql1);
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            model.addElement("--Seleccione un asesor--");
+            while (rs.next()) {
+                id_empleado = rs.getString("Id_Empleado");
+                primer_nombre = rs.getString("Primer_Nombre");
+                segundo_nombre = rs.getString("Segundo_Nombre");
+                primer_apellido = rs.getString("Primer_Apellido");
+                segundo_apellido = rs.getString("Segundo_Apellido");
+                num_telefono = rs.getString("Tel_asignado");
+                empleado_id = rs.getString("Empleado_Id_Asesor");
+                combo = new Empleado(id_empleado, empleado_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono);
+                model.addElement(combo);
+            }
+            cb_asesor.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_asesores_agregarActionPerformed
     public void SendMail() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -654,6 +732,106 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
+    public void CargarClientes(){
+        try {
+            //llenando ArrayList de Clientes
+            Clientes cliente;
+            String id_Cliente;
+            String Primer_nombre;
+            String Segundo_nombre;
+            String Primer_apellido;
+            String Segundo_Apellido;
+            String codigo_seguimiento;
+            String Direccion;
+            String telefono;
+            String email;
+            String sql3 = "SELECT * FROM cliente";
+            ResultSet rs = myStmt.executeQuery(sql3);
+            while (rs.next()) {
+                id_Cliente = rs.getString("Id_Cliente");
+                Primer_nombre = rs.getString("Primer_Nombre");
+                Segundo_nombre = rs.getString("Segundo_Nombre");
+                Primer_apellido = rs.getString("Primer_Apellido");
+                Segundo_Apellido = rs.getString("Segundo_Apellido");
+                codigo_seguimiento = rs.getString("codigo_seguimiento");
+                Direccion = rs.getString("Direccion");
+                telefono = rs.getString("Num_telefono");
+                email = rs.getString("email");
+                cliente = new Clientes(id_Cliente, Primer_nombre, Segundo_nombre, Primer_apellido, Segundo_Apellido, codigo_seguimiento, Direccion, telefono, email);
+                clientes.add(cliente);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void CargarEmpleados(){
+        try {
+            //llenando ArrayList de empleados
+            Empleado combo;
+            String empleado_id = "";
+            String id_empleado;
+            String primer_nombre;
+            String segundo_nombre;
+            String primer_apellido;
+            String segundo_apellido;
+            String num_telefono;
+            String sql1 = "SELECT * FROM empleado";
+            ResultSet rs = myStmt.executeQuery(sql1);
+            while (rs.next()) {
+                id_empleado = rs.getString("Id_Empleado");
+                primer_nombre = rs.getString("Primer_Nombre");
+                segundo_nombre = rs.getString("Segundo_Nombre");
+                primer_apellido = rs.getString("Primer_Apellido");
+                segundo_apellido = rs.getString("Segundo_Apellido");
+                num_telefono = rs.getString("Tel_asignado");
+                empleado_id = rs.getString("Empleado_Id_Asesor");
+                combo = new Empleado(id_empleado, empleado_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono);
+                empleados.add(combo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void CargarAutomoviles(){
+        try {
+            //llenando ArrayList de Automovil
+            Automovil auto;
+            String Placa;
+            String modelo;
+            int num_motor;
+            String id_cliente;
+            String sql2 = "SELECT * FROM automovil";
+            ResultSet rs = myStmt.executeQuery(sql2);
+            while (rs.next()) {
+                Placa = rs.getNString("Placa");
+                modelo = rs.getString("Modelo");
+                num_motor = rs.getInt("Numero_motor");
+                id_cliente = rs.getString("Cliente_Id_Cliente");
+                auto = new Automovil(Placa, modelo, num_motor, id_cliente);
+                automoviles.add(auto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void LLenarAsesoresComboBox(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("--Seleccione un Asesor--");
+        for (int i = 0; i < asesores.size(); i++) {
+            model.addElement(asesores.get(i));
+        }
+        cb_asesor.setModel(model);
+        cb_asesor_eliminar.setModel(model);
+    }
+    public void LLenarMecanicosComboBox(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("--Seleccione un Mecanico--");
+        for (int i = 0; i < mecanicos.size(); i++) {
+            model.addElement(mecanicos.get(i));
+        }
+        cb_mecanico.setModel(model);
+        cb_mecanico_eliminar.setModel(model);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_AgregarCita;
@@ -672,9 +850,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_EstadoCitaMod;
     private javax.swing.JComboBox<String> cb_NombreClienteModEstado;
     private javax.swing.JComboBox<String> cb_PlacaModEstado;
+    private javax.swing.JComboBox<String> cb_asesor;
     private javax.swing.JComboBox<String> cb_asesor_eliminar;
-    private javax.swing.JComboBox<String> cb_asesor_modif;
-    private javax.swing.JComboBox<String> cb_asesor_modif1;
+    private javax.swing.JComboBox<String> cb_mecanico;
     private javax.swing.JComboBox<String> cb_mecanico_eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -732,11 +910,17 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_tipoRep;
     private javax.swing.JLabel lbl_user;
     private javax.swing.JTextField tf_id;
+    private javax.swing.JTextField tf_ida;
     private javax.swing.JTextField tf_num_telefono;
+    private javax.swing.JTextField tf_num_telefonoa;
     private javax.swing.JTextField tf_primer_apellido;
+    private javax.swing.JTextField tf_primer_apellidoa;
     private javax.swing.JTextField tf_primer_nombre;
+    private javax.swing.JTextField tf_primer_nombrea;
     private javax.swing.JTextField tf_segundo_apellido;
+    private javax.swing.JTextField tf_segundo_apellidoa;
     private javax.swing.JTextField tf_segundo_nombre;
+    private javax.swing.JTextField tf_segundo_nombrea;
     private javax.swing.JTextField txt_EstadoActualCita;
     private javax.swing.JTextField txt_PApCita;
     private javax.swing.JTextField txt_PNomCita;
@@ -746,13 +930,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField txt_SNomCita;
     private javax.swing.JTextField txt_TelefonoCita;
     private javax.swing.JTextField txt_TipoReparacion;
-    private javax.swing.JTextField txt_asesores_numtel;
-    private javax.swing.JTextField txt_asesores_papellido;
-    private javax.swing.JTextField txt_asesores_pnombre;
-    private javax.swing.JTextField txt_asesores_sapellido;
-    private javax.swing.JTextField txt_asesores_snombre;
-    private javax.swing.JTextField txt_idAsesor;
     private javax.swing.JPasswordField txt_login_password;
     private javax.swing.JTextField txt_login_user;
     // End of variables declaration//GEN-END:variables
+    ArrayList<Empleado> empleados = new ArrayList();
+    ArrayList<Empleado> mecanicos = new ArrayList();
+    ArrayList<Empleado> asesores = new ArrayList();
+    ArrayList<Automovil> automoviles = new ArrayList();
+    ArrayList<Clientes> clientes = new ArrayList();
 }//FIn de la clase

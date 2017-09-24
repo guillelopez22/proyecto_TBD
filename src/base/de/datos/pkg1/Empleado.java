@@ -17,6 +17,8 @@ public class Empleado {
     private String primer_apellido;
     private String segundo_apellido;
     private String telefono_asigando;
+    private String asesor_usuario;
+    private String asesor_password;
 
     public Empleado(String id_Empleado, String id_asesor, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String telefono_asigando) {
         this.id_Empleado = id_Empleado;
@@ -27,6 +29,35 @@ public class Empleado {
         this.segundo_apellido = segundo_apellido;
         this.telefono_asigando = telefono_asigando;
     }
+
+    public Empleado(String id_Empleado, String id_asesor, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String telefono_asigando, String asesor_usuario, String asesor_password) {
+        this.id_Empleado = id_Empleado;
+        this.id_asesor = id_asesor;
+        this.primer_nombre = primer_nombre;
+        this.segundo_nombre = segundo_nombre;
+        this.primer_apellido = primer_apellido;
+        this.segundo_apellido = segundo_apellido;
+        this.telefono_asigando = telefono_asigando;
+        this.asesor_usuario = asesor_usuario;
+        this.asesor_password = asesor_password;
+    }
+
+    public String getAsesor_usuario() {
+        return asesor_usuario;
+    }
+
+    public void setAsesor_usuario(String asesor_usuario) {
+        this.asesor_usuario = asesor_usuario;
+    }
+
+    public String getAsesor_password() {
+        return asesor_password;
+    }
+
+    public void setAsesor_password(String asesor_password) {
+        this.asesor_password = asesor_password;
+    }
+    
 
     public String getId_Empleado() {
         return id_Empleado;

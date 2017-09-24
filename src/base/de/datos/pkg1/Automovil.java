@@ -4,9 +4,9 @@ public class Automovil {
     String Placa;
     String modelo;
     int num_motor;
-    int id_cliente;
+    String id_cliente;
 
-    public Automovil(String Placa, String modelo, int num_motor, int id_cliente) {
+    public Automovil(String Placa, String modelo, int num_motor, String id_cliente) {
         this.Placa = Placa;
         this.modelo = modelo;
         this.num_motor = num_motor;
@@ -37,11 +37,11 @@ public class Automovil {
         this.num_motor = num_motor;
     }
 
-    public int getId_cliente() {
+    public String getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(String id_cliente) {
         this.id_cliente = id_cliente;
     }
 

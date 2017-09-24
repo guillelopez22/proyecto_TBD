@@ -2,50 +2,48 @@ package base.de.datos.pkg1;
 
 
 public class Clientes {
-    int id_Cliente;
+    String id_Cliente;
     String Primer_nombre;
     String Segundo_nombre;
     String Primer_apellido;
     String Segundo_Apellido;
-    String Usuario;
-    String Contraseña;
+    String codigo_seguimiento;
     String Direccion;
-    int telefono;
+    String telefono;
     String email;
-    int placa_automovil;
+    String placa_automovil;
 
-    public Clientes(int id_Cliente, String Primer_nombre, String Segundo_nombre, String Primer_apellido, String Segundo_Apellido, String Usuario, String Contraseña, String Direccion, int telefono, String email) {
+    public Clientes(String id_Cliente, String Primer_nombre, String Segundo_nombre, String Primer_apellido, String Segundo_Apellido, String codigo_seguimiento, String Direccion, String telefono, String email, String placa_automovil) {
         this.id_Cliente = id_Cliente;
         this.Primer_nombre = Primer_nombre;
         this.Segundo_nombre = Segundo_nombre;
         this.Primer_apellido = Primer_apellido;
         this.Segundo_Apellido = Segundo_Apellido;
-        this.Usuario = Usuario;
-        this.Contraseña = Contraseña;
-        this.Direccion = Direccion;
-        this.telefono = telefono;
-        this.email = email;
-    }
-
-    public Clientes(int id_Cliente, String Primer_nombre, String Segundo_nombre, String Primer_apellido, String Segundo_Apellido, String Usuario, String Contraseña, String Direccion, int telefono, String email, int placa_automovil) {
-        this.id_Cliente = id_Cliente;
-        this.Primer_nombre = Primer_nombre;
-        this.Segundo_nombre = Segundo_nombre;
-        this.Primer_apellido = Primer_apellido;
-        this.Segundo_Apellido = Segundo_Apellido;
-        this.Usuario = Usuario;
-        this.Contraseña = Contraseña;
+        this.codigo_seguimiento = codigo_seguimiento;
         this.Direccion = Direccion;
         this.telefono = telefono;
         this.email = email;
         this.placa_automovil = placa_automovil;
     }
 
-    public int getId_Cliente() {
+    public Clientes(String id_Cliente, String Primer_nombre, String Segundo_nombre, String Primer_apellido, String Segundo_Apellido, String codigo_seguimiento, String Direccion, String telefono, String email) {
+        this.id_Cliente = id_Cliente;
+        this.Primer_nombre = Primer_nombre;
+        this.Segundo_nombre = Segundo_nombre;
+        this.Primer_apellido = Primer_apellido;
+        this.Segundo_Apellido = Segundo_Apellido;
+        this.codigo_seguimiento = codigo_seguimiento;
+        this.Direccion = Direccion;
+        this.telefono = telefono;
+        this.email = email;
+    }
+    
+
+    public String getId_Cliente() {
         return id_Cliente;
     }
 
-    public void setId_Cliente(int id_Cliente) {
+    public void setId_Cliente(String id_Cliente) {
         this.id_Cliente = id_Cliente;
     }
 
@@ -81,20 +79,12 @@ public class Clientes {
         this.Segundo_Apellido = Segundo_Apellido;
     }
 
-    public String getUsuario() {
-        return Usuario;
+    public String getCodigo_seguimiento() {
+        return codigo_seguimiento;
     }
 
-    public void setUsuario(String Usuario) {
-        this.Usuario = Usuario;
-    }
-
-    public String getContraseña() {
-        return Contraseña;
-    }
-
-    public void setContraseña(String Contraseña) {
-        this.Contraseña = Contraseña;
+    public void setCodigo_seguimiento(String codigo_seguimiento) {
+        this.codigo_seguimiento = codigo_seguimiento;
     }
 
     public String getDireccion() {
@@ -105,11 +95,11 @@ public class Clientes {
         this.Direccion = Direccion;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -121,18 +111,19 @@ public class Clientes {
         this.email = email;
     }
 
-    public int getPlaca_automovil() {
+    public String getPlaca_automovil() {
         return placa_automovil;
     }
 
-    public void setPlaca_automovil(int placa_automovil) {
+    public void setPlaca_automovil(String placa_automovil) {
         this.placa_automovil = placa_automovil;
     }
 
     @Override
     public String toString() {
-        return "Clientes{" + "id_Cliente=" + id_Cliente + ", Primer_nombre=" + Primer_nombre + ", Segundo_nombre=" + Segundo_nombre + ", Primer_apellido=" + Primer_apellido + ", Segundo_Apellido=" + Segundo_Apellido + ", Usuario=" + Usuario + ", Contrase\u00f1a=" + Contraseña + ", Direccion=" + Direccion + ", telefono=" + telefono + ", email=" + email + ", placa_automovil=" + placa_automovil + '}';
+        return id_Cliente+" "+Primer_nombre+" "+Primer_apellido;
     }
+  
     
     
 }//Fin de la clase
