@@ -114,6 +114,13 @@ public class Empleado {
     public void setTelefono_asigando(String telefono_asigando) {
         this.telefono_asigando = telefono_asigando;
     }
+
+    @Override
+    public String toString() {
+        return id_Empleado + " " + primer_nombre + " " + primer_apellido;
+    }
+
+    
     
     
 }
