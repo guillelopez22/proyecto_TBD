@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -718,6 +719,16 @@ public class Login extends javax.swing.JFrame {
             jd_administador.pack();
             jd_administador.setVisible(true);
         }//Fin del if
+        for (int i = 0; i < empleados.size(); i++) {
+            if (user.contentEquals(empleados.get(i).getAsesor_usuario())) {
+                System.out.println("usuario encontrado");
+                if (password.contentEquals(empleados.get(i).getAsesor_password())) {
+                    jd_citas.setModal(true);
+                    jd_citas.pack();
+                    jd_citas.setVisible(true);
+                }
+            }
+        }
     }//GEN-LAST:event_btn_login_ingresarActionPerformed
 
     private void btn_AsesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AsesoresActionPerformed
@@ -831,7 +842,6 @@ public class Login extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "llene el campo id_cliente");
             }
-            
 
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -857,29 +867,49 @@ public class Login extends javax.swing.JFrame {
             tf_segundo_apellido_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getSegundo_Apellido());
             tf_num_telefono_cita.setText(((Clientes) cb_clientes.getSelectedItem()).getTelefono());
             tf_email_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getEmail());
-            LLenarAutomovilComboBox((Clientes)cb_clientes.getSelectedItem());
+            LLenarAutomovilComboBox((Clientes) cb_clientes.getSelectedItem());
         }
 
     }//GEN-LAST:event_cb_clientesItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        CrearCliente(tf_id_cliente_cita.getText(), tf_primer_nombre.getText(), tf_segundo_nombre_cliente.getText(), tf_primer_apellido_cliente.getText(), 
+        CrearCliente(tf_id_cliente_cita.getText(), tf_primer_nombre.getText(), tf_segundo_nombre_cliente.getText(), tf_primer_apellido_cliente.getText(),
                 tf_segundo_apellido_cliente.getText(), tf_Direccion.getText(), tf_num_telefono_cita.getText(), tf_email_cliente.getText());
         CargarClientes();
         LLenarClientesComboBox();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_AgregarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarCitaActionPerformed
-        // TODO add your handling code here:
-        String Id_Cita, Nombre_Cliente, Num_telefono, Tipo_Cita, Fecha_hora_entrada;
-        Date Fecha_entrega;
-        String Estado, Cliente_Id_Cliente, Id_empleado_cita, Automovil_placa, id_CitaMantenimiento, id_CitaReparacion;
-//        String sql = "INSERT INTO cita " + "(Id_Cita, Nombre_Cliente, Num_telefono, Tipo_cita, Fecha_hora_entrada, Fecha_entrega, Estado, Cliente_Id_Cliente, Id_empleado_cita, Automovil_Placa, id_CitaMantenimiento, id_CitaReparacion)"
-//                        + "values  ('" + placa + "','" + modelo + "','" + num_motor + "','" + id_cliente + "')";
-//                myStmt.executeUpdate(sql);
-//                JOptionPane.showMessageDialog(this, "Automovil Agregado exitosamente");
-        
+        try {
+            int hora = (int) sp_hora_citas.getValue();
+            Date entrada = (Date) jd_entrada.getDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fill, fill1;
+            String fech = sdf.format(entrada) + " " + Integer.toString(hora) + ":00:00";
+            if (rb_mantenimiento.isSelected()) {
+                fill = "mantenimiento";
+                fill1 = "---";
+            } else {
+                fill = "---";
+                fill1 = "reparacion";
+            }
+            String Id_Cita = tf_seguimiento.getText(), Nombre_Cliente = tf_primer_nombre_cliente.getText() + " " + tf_primer_apellido_cliente, Num_telefono = tf_num_telefono_cita.getText(), Tipo_Cita = fill, Fecha_hora_entrada = fech;
+            Date Fecha_entrega = (Date) jd_entrega.getDate();
+            String Estado = cb_EstadoAgregarCita.getSelectedItem().toString(),
+                    Cliente_Id_Cliente = tf_id_cliente_cita.getText(),
+                    Id_empleado_cita = "admin",
+                    Automovil_placa = ((Automovil) cb_automoviles.getSelectedItem()).getPlaca(),
+                    id_CitaMantenimiento = fill,
+                    id_CitaReparacion = fill1;
+            String sql = "INSERT INTO cita " + "(Id_Cita, Nombre_Cliente, Num_telefono, Tipo_cita, Fecha_hora_entrada, Fecha_entrega, Estado, Cliente_Id_Cliente, Id_empleado_cita, Automovil_Placa, id_CitaMantenimiento, id_CitaReparacion)"
+                    + "values  ('" + Id_Cita + "','" + Nombre_Cliente + "','" + Num_telefono + "','" + Tipo_Cita + "','" + Fecha_hora_entrada + "','" + Fecha_entrega + "','" + Estado + "','" + Cliente_Id_Cliente + "','" + Id_empleado_cita + "','" + Automovil_placa + "','" + id_CitaMantenimiento + "','" + id_CitaReparacion + "')";
+            myStmt.executeUpdate(sql);
+            JOptionPane.showMessageDialog(this, "Automovil Agregado exitosamente");
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btn_AgregarCitaActionPerformed
 
     private void rb_mantenimientoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rb_mantenimientoItemStateChanged
@@ -1037,7 +1067,8 @@ public class Login extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void AsignarCarros(){
+
+    public void AsignarCarros() {
         for (int i = 0; i < clientes.size(); i++) {
             for (int j = 0; j < automoviles.size(); j++) {
                 if (clientes.get(i).getId_Cliente().equals(automoviles.get(j).getId_cliente())) {
@@ -1056,7 +1087,8 @@ public class Login extends javax.swing.JFrame {
         cb_asesor.setModel(model);
         cb_asesor_eliminar.setModel(model);
     }
-    public void LLenarClientesComboBox(){
+
+    public void LLenarClientesComboBox() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("--Seleccione un Cliente--");
         for (int i = 0; i < clientes.size(); i++) {
@@ -1064,6 +1096,7 @@ public class Login extends javax.swing.JFrame {
         }
         cb_clientes.setModel(model);
     }
+
     public void LLenarMecanicosComboBox() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("--Seleccione un Mecanico--");
@@ -1073,7 +1106,8 @@ public class Login extends javax.swing.JFrame {
         cb_mecanico.setModel(model);
         cb_mecanico_eliminar.setModel(model);
     }
-    public void LLenarAutomovilComboBox(Clientes cliente){
+
+    public void LLenarAutomovilComboBox(Clientes cliente) {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("--Seleccione un Automovil--");
         for (int i = 0; i < cliente.getCarros().size(); i++) {
@@ -1081,7 +1115,8 @@ public class Login extends javax.swing.JFrame {
         }
         cb_automoviles.setModel(model);
     }
-    public void CargarMantenimiento(){
+
+    public void CargarMantenimiento() {
         try {
             //llenando cb_mantenimiento
             String idCitaMantenimiento;
@@ -1094,12 +1129,13 @@ public class Login extends javax.swing.JFrame {
                 tipo_mantenimiento = rs.getString("Modelo");
                 model.addElement(tipo_mantenimiento);
             }
-          cb_mantenimiento.setModel(model);  
+            cb_mantenimiento.setModel(model);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void CargarReparacion(){
+
+    public void CargarReparacion() {
         try {
             //llenando cb_mantenimiento
             String idCitaReparacion;
@@ -1112,11 +1148,12 @@ public class Login extends javax.swing.JFrame {
                 tipo_reparacion = rs.getString("Modelo");
                 model.addElement(tipo_reparacion);
             }
-          cb_reparacion.setModel(model);  
+            cb_reparacion.setModel(model);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void SepararMecanicosAsesore() {
         //separando los mecanicos y asesores
         for (int i = 0; i < empleados.size(); i++) {
@@ -1128,7 +1165,7 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
-    public void CrearCliente(String Id_Cliente, String Primer_Nombre, String Segundo_Nombre, String Primer_Apellido, String Segundo_Apellido, String Direccion, 
+    public void CrearCliente(String Id_Cliente, String Primer_Nombre, String Segundo_Nombre, String Primer_Apellido, String Segundo_Apellido, String Direccion,
             String Num_telefono, String email) {
         try (PreparedStatement pstm = myConn.prepareStatement("{call INSERTAR_CLIENTES (?,?,?,?,?,?,?,?)}")) {
             pstm.setString(1, Id_Cliente);

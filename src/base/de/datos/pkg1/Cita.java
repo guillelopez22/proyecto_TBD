@@ -24,7 +24,11 @@ public class Cita {
     private String Automovil_Placa;
     private String id_CitaMantenimiento;
     private String id_CitaReparacion;
+    private String date_format;
 
+    public Cita() {
+    }
+    
     public Cita(String Id_Cita, String Nombre_Cliente, String Tipo_Cita, Date Fecha_Entrada, Date Fecha_Entrega, String Estado, String Cliente_Id_Cliente, String Id_empleado_cita, String Automovil_Placa, String id_CitaMantenimiento, String id_CitaReparacion) {
         this.Id_Cita = Id_Cita;
         this.Nombre_Cliente = Nombre_Cliente;
