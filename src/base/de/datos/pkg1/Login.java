@@ -49,6 +49,12 @@ public class Login extends javax.swing.JFrame {
         cb_mantenimiento.setVisible(false);
         cb_reparacion.setVisible(false);
         CargarEmpleados();
+        CargarClientes();
+        System.out.println("imprimiendo clientes");
+        for (int i = 0; i < clientes.size(); i++) {
+            System.out.println(clientes.get(i));
+        }
+        LLenarClientesComboBox();
         SepararMecanicosAsesores();
         LLenarAsesoresComboBox();
     }//Fin del constructor general
@@ -259,6 +265,11 @@ public class Login extends javax.swing.JFrame {
         jd_admin_asesores.getContentPane().add(btn_asesores_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, -1, -1));
 
         btn_asesor_modif.setText("Modificar");
+        btn_asesor_modif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_asesor_modifActionPerformed(evt);
+            }
+        });
         jd_admin_asesores.getContentPane().add(btn_asesor_modif, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
 
         btn_asesor_eliminar.setText("Eliminar");
@@ -276,6 +287,11 @@ public class Login extends javax.swing.JFrame {
         lbl_agrgAse.setText("Agregar Asesor");
         jd_admin_asesores.getContentPane().add(lbl_agrgAse, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 22, -1, -1));
 
+        cb_asesor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_asesorItemStateChanged(evt);
+            }
+        });
         jd_admin_asesores.getContentPane().add(cb_asesor, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 214, -1));
 
         lbl_EliAse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -443,7 +459,7 @@ public class Login extends javax.swing.JFrame {
         lbl_tipoRep.setForeground(new java.awt.Color(255, 255, 255));
         lbl_tipoRep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_tipoRep.setText("Tipo Reparación");
-        jd_citas.getContentPane().add(lbl_tipoRep, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, -1, -1));
+        jd_citas.getContentPane().add(lbl_tipoRep, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, -1, -1));
 
         lbl_SnomCi.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_SnomCi.setForeground(new java.awt.Color(255, 255, 255));
@@ -461,34 +477,34 @@ public class Login extends javax.swing.JFrame {
         lbl_sapci.setForeground(new java.awt.Color(255, 255, 255));
         lbl_sapci.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_sapci.setText("Segundo Apellido");
-        jd_citas.getContentPane().add(lbl_sapci, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
+        jd_citas.getContentPane().add(lbl_sapci, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
         jd_citas.getContentPane().add(tf_primer_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
         jd_citas.getContentPane().add(tf_segundo_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 140, -1));
         jd_citas.getContentPane().add(tf_primer_apellido_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 140, -1));
-        jd_citas.getContentPane().add(tf_Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 140, -1));
+        jd_citas.getContentPane().add(tf_Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 140, -1));
         jd_citas.getContentPane().add(tf_num_telefono_cita, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 140, -1));
 
         lbl_Estado.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_Estado.setForeground(new java.awt.Color(255, 255, 255));
         lbl_Estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_Estado.setText("Estado");
-        jd_citas.getContentPane().add(lbl_Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 370, -1, -1));
+        jd_citas.getContentPane().add(lbl_Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, -1, -1));
 
         cb_EstadoAgregarCita.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cb_EstadoAgregarCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NO INGRESADO", "INGRESADO", "EN REPARACIÓN", "EN MANTENIMIENTO", "PENDIENTE DE REPUESTOS", "LISTO", "AUTO RETIRADO", "CANCELADA" }));
-        jd_citas.getContentPane().add(cb_EstadoAgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 140, -1));
+        jd_citas.getContentPane().add(cb_EstadoAgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 140, -1));
 
         lbl_FechaEntrada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_FechaEntrada.setForeground(new java.awt.Color(255, 255, 255));
         lbl_FechaEntrada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_FechaEntrada.setText("Fecha de Entrada");
-        jd_citas.getContentPane().add(lbl_FechaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
+        jd_citas.getContentPane().add(lbl_FechaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, -1, -1));
 
         lbl_FechaEntrega.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_FechaEntrega.setForeground(new java.awt.Color(255, 255, 255));
         lbl_FechaEntrega.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_FechaEntrega.setText("Fecha de Entrega");
-        jd_citas.getContentPane().add(lbl_FechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, -1, -1));
+        jd_citas.getContentPane().add(lbl_FechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, -1, -1));
 
         btn_AgregarCita.setText("Agregar Cita");
         btn_AgregarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -496,7 +512,7 @@ public class Login extends javax.swing.JFrame {
                 btn_AgregarCitaActionPerformed(evt);
             }
         });
-        jd_citas.getContentPane().add(btn_AgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 120, -1));
+        jd_citas.getContentPane().add(btn_AgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 120, -1));
 
         btn_ModificarEstadoCita.setText("Modificar Estado");
         btn_ModificarEstadoCita.addActionListener(new java.awt.event.ActionListener() {
@@ -504,16 +520,16 @@ public class Login extends javax.swing.JFrame {
                 btn_ModificarEstadoCitaActionPerformed(evt);
             }
         });
-        jd_citas.getContentPane().add(btn_ModificarEstadoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 420, -1, -1));
-        jd_citas.getContentPane().add(jd_entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 200, -1));
-        jd_citas.getContentPane().add(jd_entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 200, -1));
+        jd_citas.getContentPane().add(btn_ModificarEstadoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, -1, -1));
+        jd_citas.getContentPane().add(jd_entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 200, -1));
+        jd_citas.getContentPane().add(jd_entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 210, 200, -1));
 
         lbl_sapci1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_sapci1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_sapci1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_sapci1.setText("Direccion");
-        jd_citas.getContentPane().add(lbl_sapci1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, -1));
-        jd_citas.getContentPane().add(tf_segundo_apellido_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 140, -1));
+        jd_citas.getContentPane().add(lbl_sapci1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+        jd_citas.getContentPane().add(tf_segundo_apellido_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 140, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -542,9 +558,9 @@ public class Login extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Carros del cliente:");
-        jd_citas.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
+        jd_citas.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, -1, -1));
 
-        jd_citas.getContentPane().add(cb_automoviles, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 200, -1));
+        jd_citas.getContentPane().add(cb_automoviles, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 200, -1));
 
         jButton1.setText("Agregar Cliente");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -563,16 +579,16 @@ public class Login extends javax.swing.JFrame {
         jd_citas.getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 410, -1, -1));
 
         jButton4.setText("Seleccionar");
-        jd_citas.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, -1, -1));
+        jd_citas.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Id de seguimiendo");
-        jd_citas.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, -1, -1));
-        jd_citas.getContentPane().add(tf_seguimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
+        jd_citas.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
+        jd_citas.getContentPane().add(tf_seguimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 140, -1));
 
         sp_hora_citas.setModel(new javax.swing.SpinnerNumberModel(7, 7, 17, 1));
-        jd_citas.getContentPane().add(sp_hora_citas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 170, -1, -1));
+        jd_citas.getContentPane().add(sp_hora_citas, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, -1, -1));
 
         buttonGroup1.add(rb_mantenimiento);
         rb_mantenimiento.setText("Mantenimiento");
@@ -581,7 +597,7 @@ public class Login extends javax.swing.JFrame {
                 rb_mantenimientoItemStateChanged(evt);
             }
         });
-        jd_citas.getContentPane().add(rb_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, -1, -1));
+        jd_citas.getContentPane().add(rb_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, -1, -1));
 
         buttonGroup1.add(rb_reparacion);
         rb_reparacion.setText("Reparacion");
@@ -590,11 +606,11 @@ public class Login extends javax.swing.JFrame {
                 rb_reparacionItemStateChanged(evt);
             }
         });
-        jd_citas.getContentPane().add(rb_reparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 250, -1, -1));
+        jd_citas.getContentPane().add(rb_reparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 250, -1, -1));
 
-        jd_citas.getContentPane().add(cb_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, -1, -1));
+        jd_citas.getContentPane().add(cb_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 300, -1, -1));
 
-        jd_citas.getContentPane().add(cb_reparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 300, -1, -1));
+        jd_citas.getContentPane().add(cb_reparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 300, -1, -1));
 
         lbl_fondoCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotos/NaranjaOscuro.jpg"))); // NOI18N
         jd_citas.getContentPane().add(lbl_fondoCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 850, 480));
@@ -735,25 +751,24 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_login_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_login_ingresarActionPerformed
-
+        CargarEmpleados();
+        SepararMecanicosAsesores();
         String user = txt_login_user.getText();
+        System.out.println(user);
         String password = txt_login_password.getText();
+        System.out.println(password);
         if (user.contentEquals("admin") && password.contentEquals("1234")) {
             jd_administador.setModal(true);
             jd_administador.pack();
             jd_administador.setVisible(true);
         }//Fin del if
-//        for (int i = 0; i < empleados.size(); i++) {
-//            if (user.contentEquals(empleados.get(i).getAsesor_usuario())) {
-//                System.out.println("usuario encontrado");
-//                if (password.contentEquals(empleados.get(i).getAsesor_password())) {
-//                    jd_citas.setModal(true);
-//                    jd_citas.pack();
-//                    jd_citas.setVisible(true);
-//                }
-//            }
-//        }
-
+        for (int i = 0; i < asesores.size(); i++) {
+            if (user.equals(asesores.get(i).getAsesor_usuario()) && password.equals(asesores.get(i).getAsesor_password())) {
+                jd_citas.setModal(true);
+                jd_citas.pack();
+                jd_citas.setVisible(true);
+            }
+        }
 
     }//GEN-LAST:event_btn_login_ingresarActionPerformed
 
@@ -964,6 +979,23 @@ public class Login extends javax.swing.JFrame {
         cb_mantenimiento.setVisible(false);
         cb_reparacion.setVisible(true);
     }//GEN-LAST:event_rb_reparacionItemStateChanged
+
+    private void btn_asesor_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asesor_modifActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_asesor_modifActionPerformed
+
+    private void cb_asesorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_asesorItemStateChanged
+        // TODO add your handling code here:
+        tf_ida.setText(((Empleado)cb_asesor.getSelectedItem()).getId_Empleado()); 
+        tf_primer_nombrea.setText(((Empleado)cb_asesor.getSelectedItem()).getPrimer_nombre());
+        tf_segundo_nombrea.setText(((Empleado)cb_asesor.getSelectedItem()).getSegundo_nombre());
+        tf_primer_apellidoa.setText(((Empleado)cb_asesor.getSelectedItem()).getPrimer_apellido());
+        tf_segundo_apellidoa.setText(((Empleado)cb_asesor.getSelectedItem()).getSegundo_apellido());
+        tf_num_telefonoa.setText(((Empleado)cb_asesor.getSelectedItem()).getTelefono_asigando());
+        tf_usuario.setText(((Empleado)cb_asesor.getSelectedItem()).getAsesor_usuario());
+        tf_password.setText(((Empleado)cb_asesor.getSelectedItem()).getAsesor_password());
+    }//GEN-LAST:event_cb_asesorItemStateChanged
     public void SendMail() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -1042,6 +1074,8 @@ public class Login extends javax.swing.JFrame {
             String segundo_apellido;
             String num_telefono;
             String sql1 = "SELECT * FROM empleado";
+            String password;
+            String user;
             ResultSet rs = myStmt.executeQuery(sql1);
             while (rs.next()) {
                 id_empleado = rs.getString("Id_Empleado");
@@ -1052,7 +1086,9 @@ public class Login extends javax.swing.JFrame {
                 segundo_apellido = rs.getString("Segundo_Apellido");
                 num_telefono = rs.getString("Tel_asignado");
                 empleado_id = rs.getString("Empleado_Id_Asesor");
-                combo = new Empleado(id_empleado, empleado_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono);
+                password = rs.getString("Password");
+                user = rs.getString("User");
+                combo = new Empleado(id_empleado, empleado_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, user, password);
                 mecanicos.add(combo);
             }
         } catch (SQLException ex) {
@@ -1173,6 +1209,7 @@ public class Login extends javax.swing.JFrame {
 
     public void SepararMecanicosAsesores() {
         //separando los mecanicos y asesores
+        asesores=new ArrayList();
         System.out.println("fin test");
         for (int i = 0; i < mecanicos.size(); i++) {
             if (mecanicos.get(i).getId_Empleado().equals("AS" + Integer.toString(i + 1))) {
@@ -1202,10 +1239,10 @@ public class Login extends javax.swing.JFrame {
             pstm.setString(6, Direccion);
             pstm.setString(7, Num_telefono);
             pstm.setString(8, email);
-            ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
-                System.out.println(rs.getString("Id_Cliente"));
-            }
+//            ResultSet rs = pstm.executeQuery();
+//            while (rs.next()) {
+//                System.out.println(rs.getString("Id_Cliente"));
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1402,8 +1439,7 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     ArrayList<Empleado> mecanicos = new ArrayList();
     ArrayList<Empleado> asesores = new ArrayList();
-    ArrayList<Automovil> automoviles = new ArrayList();
-    ;
+    ArrayList<Automovil> automoviles = new ArrayList();    
     ArrayList<Clientes> clientes = new ArrayList();
-;
+
 }//FIn de la clase
