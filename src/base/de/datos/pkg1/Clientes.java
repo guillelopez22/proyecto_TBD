@@ -1,5 +1,7 @@
 package base.de.datos.pkg1;
 
+import java.util.ArrayList;
+
 
 public class Clientes {
     String id_Cliente;
@@ -12,6 +14,7 @@ public class Clientes {
     String telefono;
     String email;
     String placa_automovil;
+    ArrayList<Automovil> carros = new ArrayList();
 
     public Clientes(String id_Cliente, String Primer_nombre, String Segundo_nombre, String Primer_apellido, String Segundo_Apellido, String codigo_seguimiento, String Direccion, String telefono, String email, String placa_automovil) {
         this.id_Cliente = id_Cliente;
@@ -37,8 +40,16 @@ public class Clientes {
         this.telefono = telefono;
         this.email = email;
     }
-    
 
+    public ArrayList<Automovil> getCarros() {
+        return carros;
+    }
+
+    public void setCarros(Automovil auto) {
+        this.carros.add(auto);
+    }
+    
+    
     public String getId_Cliente() {
         return id_Cliente;
     }

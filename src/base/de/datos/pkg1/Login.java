@@ -2,6 +2,7 @@ package base.de.datos.pkg1;
 
 import javax.mail.PasswordAuthentication;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +42,13 @@ public class Login extends javax.swing.JFrame {
         this.setTitle("Login");
         this.setLocationRelativeTo(null);
         System.out.println("");
+        CargarAutomoviles();
+        CargarClientes();
+        CargarEmpleados();
+        AsignarCarros();
+        SepararMecanicosAsesore();
+        cb_mantenimiento.setVisible(false);
+        cb_reparacion.setVisible(false);
 
     }//Fin del constructor general
 
@@ -104,22 +112,17 @@ public class Login extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jd_citas = new javax.swing.JDialog();
         lbl_agreCit = new javax.swing.JLabel();
-        lbl_nomClie = new javax.swing.JLabel();
         lbl_pNom = new javax.swing.JLabel();
-        lbl_Recorrido = new javax.swing.JLabel();
-        lbl_tipoRep = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        lbl_tipoRep = new javax.swing.JLabel();
         lbl_SnomCi = new javax.swing.JLabel();
         lbl_papCi = new javax.swing.JLabel();
         lbl_sapci = new javax.swing.JLabel();
         tf_primer_nombre_cliente = new javax.swing.JTextField();
         tf_segundo_nombre_cliente = new javax.swing.JTextField();
         tf_primer_apellido_cliente = new javax.swing.JTextField();
-        tf_segundo_apellido_cliiente = new javax.swing.JTextField();
-        tf_recorrido = new javax.swing.JTextField();
-        tf_placa = new javax.swing.JTextField();
-        txt_TipoReparacion = new javax.swing.JTextField();
-        txt_TelefonoCita = new javax.swing.JTextField();
+        tf_Direccion = new javax.swing.JTextField();
+        tf_num_telefono_cita = new javax.swing.JTextField();
         lbl_Estado = new javax.swing.JLabel();
         cb_EstadoAgregarCita = new javax.swing.JComboBox<>();
         lbl_FechaEntrada = new javax.swing.JLabel();
@@ -128,19 +131,46 @@ public class Login extends javax.swing.JFrame {
         btn_ModificarEstadoCita = new javax.swing.JButton();
         jd_entrada = new org.jdesktop.swingx.JXDatePicker();
         jd_entrega = new org.jdesktop.swingx.JXDatePicker();
+        lbl_sapci1 = new javax.swing.JLabel();
+        tf_segundo_apellido_cliente = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tf_email_cliente = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        tf_id_cliente_cita = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cb_clientes = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cb_automoviles = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        tf_seguimiento = new javax.swing.JTextField();
+        sp_hora_citas = new javax.swing.JSpinner();
+        rb_mantenimiento = new javax.swing.JRadioButton();
+        rb_reparacion = new javax.swing.JRadioButton();
+        cb_mantenimiento = new javax.swing.JComboBox<>();
+        cb_reparacion = new javax.swing.JComboBox<>();
         lbl_fondoCitas = new javax.swing.JLabel();
         jd_ModificarEstado = new javax.swing.JDialog();
         lbl_modEst = new javax.swing.JLabel();
         lbl_nomClienteCitaMod = new javax.swing.JLabel();
-        lbl_PlacaCarroCitaMod = new javax.swing.JLabel();
         lbl_EstadoActual = new javax.swing.JLabel();
-        cb_NombreClienteModEstado = new javax.swing.JComboBox<>();
-        cb_PlacaModEstado = new javax.swing.JComboBox<>();
+        cb_modificar_estado_cita = new javax.swing.JComboBox<>();
         txt_EstadoActualCita = new javax.swing.JTextField();
         lbl_NuevoEstado = new javax.swing.JLabel();
         cb_EstadoCitaMod = new javax.swing.JComboBox<>();
         btn_ModificarEstado = new javax.swing.JButton();
         lbl_fondoModEstado = new javax.swing.JLabel();
+        jd_automovil = new javax.swing.JDialog();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        tf_placa = new javax.swing.JTextField();
+        tf_num_motor = new javax.swing.JTextField();
+        tf_modelo = new javax.swing.JFormattedTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         lbl_login = new javax.swing.JLabel();
         lbl_user = new javax.swing.JLabel();
         lbl_Password = new javax.swing.JLabel();
@@ -373,87 +403,76 @@ public class Login extends javax.swing.JFrame {
         lbl_agreCit.setText("Citas");
         jd_citas.getContentPane().add(lbl_agreCit, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 150, 40));
 
-        lbl_nomClie.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lbl_nomClie.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_nomClie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_nomClie.setText("Placa del Carro");
-        jd_citas.getContentPane().add(lbl_nomClie, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
-
         lbl_pNom.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_pNom.setForeground(new java.awt.Color(255, 255, 255));
         lbl_pNom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_pNom.setText("Primer Nombre");
-        jd_citas.getContentPane().add(lbl_pNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
-
-        lbl_Recorrido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lbl_Recorrido.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_Recorrido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Recorrido.setText("Recorrido");
-        jd_citas.getContentPane().add(lbl_Recorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
-
-        lbl_tipoRep.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lbl_tipoRep.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_tipoRep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_tipoRep.setText("Tipo Reparación");
-        jd_citas.getContentPane().add(lbl_tipoRep, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
+        jd_citas.getContentPane().add(lbl_pNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Teléfono");
-        jd_citas.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, -1, -1));
+        jd_citas.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
+
+        lbl_tipoRep.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lbl_tipoRep.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_tipoRep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_tipoRep.setText("Tipo Reparación");
+        jd_citas.getContentPane().add(lbl_tipoRep, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, -1, -1));
 
         lbl_SnomCi.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_SnomCi.setForeground(new java.awt.Color(255, 255, 255));
         lbl_SnomCi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_SnomCi.setText("Segundo Nombre");
-        jd_citas.getContentPane().add(lbl_SnomCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+        jd_citas.getContentPane().add(lbl_SnomCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
 
         lbl_papCi.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_papCi.setForeground(new java.awt.Color(255, 255, 255));
         lbl_papCi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_papCi.setText("Primer Apellido");
-        jd_citas.getContentPane().add(lbl_papCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 120, 20));
+        jd_citas.getContentPane().add(lbl_papCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 120, 20));
 
         lbl_sapci.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_sapci.setForeground(new java.awt.Color(255, 255, 255));
         lbl_sapci.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_sapci.setText("Segundo Apellido");
-        jd_citas.getContentPane().add(lbl_sapci, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
-        jd_citas.getContentPane().add(tf_primer_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 140, -1));
-        jd_citas.getContentPane().add(tf_segundo_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 140, -1));
-        jd_citas.getContentPane().add(tf_primer_apellido_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 140, -1));
-        jd_citas.getContentPane().add(tf_segundo_apellido_cliiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 140, -1));
-        jd_citas.getContentPane().add(tf_recorrido, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 140, -1));
-        jd_citas.getContentPane().add(tf_placa, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 140, -1));
-        jd_citas.getContentPane().add(txt_TipoReparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 140, 30));
-        jd_citas.getContentPane().add(txt_TelefonoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, 140, -1));
+        jd_citas.getContentPane().add(lbl_sapci, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
+        jd_citas.getContentPane().add(tf_primer_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
+        jd_citas.getContentPane().add(tf_segundo_nombre_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 140, -1));
+        jd_citas.getContentPane().add(tf_primer_apellido_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 140, -1));
+        jd_citas.getContentPane().add(tf_Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 140, -1));
+        jd_citas.getContentPane().add(tf_num_telefono_cita, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 140, -1));
 
         lbl_Estado.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_Estado.setForeground(new java.awt.Color(255, 255, 255));
         lbl_Estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_Estado.setText("Estado");
-        jd_citas.getContentPane().add(lbl_Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
+        jd_citas.getContentPane().add(lbl_Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 370, -1, -1));
 
         cb_EstadoAgregarCita.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cb_EstadoAgregarCita.setForeground(new java.awt.Color(255, 255, 255));
-        cb_EstadoAgregarCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NO INGRESADO", "INGRESADO", "EN REPARACIÓN", "PENDIENTE DE REPUESTOS", "LISTO", "AUTO RETIRADO", "CANCELADA" }));
-        jd_citas.getContentPane().add(cb_EstadoAgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 140, -1));
+        cb_EstadoAgregarCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NO INGRESADO", "INGRESADO", "EN REPARACIÓN", "EN MANTENIMIENTO", "PENDIENTE DE REPUESTOS", "LISTO", "AUTO RETIRADO", "CANCELADA" }));
+        jd_citas.getContentPane().add(cb_EstadoAgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 140, -1));
 
         lbl_FechaEntrada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_FechaEntrada.setForeground(new java.awt.Color(255, 255, 255));
         lbl_FechaEntrada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_FechaEntrada.setText("Fecha de Entrada");
-        jd_citas.getContentPane().add(lbl_FechaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
+        jd_citas.getContentPane().add(lbl_FechaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
 
         lbl_FechaEntrega.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_FechaEntrega.setForeground(new java.awt.Color(255, 255, 255));
         lbl_FechaEntrega.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_FechaEntrega.setText("Fecha de Entrega");
-        jd_citas.getContentPane().add(lbl_FechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, -1, -1));
+        jd_citas.getContentPane().add(lbl_FechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, -1, -1));
 
         btn_AgregarCita.setText("Agregar Cita");
-        jd_citas.getContentPane().add(btn_AgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(491, 310, 120, -1));
+        btn_AgregarCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarCitaActionPerformed(evt);
+            }
+        });
+        jd_citas.getContentPane().add(btn_AgregarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 120, -1));
 
         btn_ModificarEstadoCita.setText("Modificar Estado");
         btn_ModificarEstadoCita.addActionListener(new java.awt.event.ActionListener() {
@@ -461,9 +480,97 @@ public class Login extends javax.swing.JFrame {
                 btn_ModificarEstadoCitaActionPerformed(evt);
             }
         });
-        jd_citas.getContentPane().add(btn_ModificarEstadoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, -1, -1));
-        jd_citas.getContentPane().add(jd_entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 200, -1));
-        jd_citas.getContentPane().add(jd_entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 200, -1));
+        jd_citas.getContentPane().add(btn_ModificarEstadoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 420, -1, -1));
+        jd_citas.getContentPane().add(jd_entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 200, -1));
+        jd_citas.getContentPane().add(jd_entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 200, -1));
+
+        lbl_sapci1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lbl_sapci1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_sapci1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_sapci1.setText("Direccion");
+        jd_citas.getContentPane().add(lbl_sapci1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, -1));
+        jd_citas.getContentPane().add(tf_segundo_apellido_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 140, -1));
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Email:");
+        jd_citas.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, -1, -1));
+        jd_citas.getContentPane().add(tf_email_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 140, -1));
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Id_cliente");
+        jd_citas.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
+        jd_citas.getContentPane().add(tf_id_cliente_cita, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 140, -1));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Buscar Clientes:");
+        jd_citas.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        cb_clientes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_clientesItemStateChanged(evt);
+            }
+        });
+        jd_citas.getContentPane().add(cb_clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 190, -1));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Carros del cliente:");
+        jd_citas.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
+
+        jd_citas.getContentPane().add(cb_automoviles, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 200, -1));
+
+        jButton1.setText("Agregar Cliente");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jd_citas.getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, -1, -1));
+
+        jButton2.setText("Crear Automovil");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jd_citas.getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 410, -1, -1));
+
+        jButton4.setText("Seleccionar");
+        jd_citas.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Id de seguimiendo");
+        jd_citas.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, -1, -1));
+        jd_citas.getContentPane().add(tf_seguimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
+
+        sp_hora_citas.setModel(new javax.swing.SpinnerNumberModel(7, 7, 17, 1));
+        jd_citas.getContentPane().add(sp_hora_citas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 170, -1, -1));
+
+        buttonGroup1.add(rb_mantenimiento);
+        rb_mantenimiento.setText("Mantenimiento");
+        rb_mantenimiento.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rb_mantenimientoItemStateChanged(evt);
+            }
+        });
+        jd_citas.getContentPane().add(rb_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, -1, -1));
+
+        buttonGroup1.add(rb_reparacion);
+        rb_reparacion.setText("Reparacion");
+        rb_reparacion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rb_reparacionItemStateChanged(evt);
+            }
+        });
+        jd_citas.getContentPane().add(rb_reparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 250, -1, -1));
+
+        jd_citas.getContentPane().add(cb_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, -1, -1));
+
+        jd_citas.getContentPane().add(cb_reparacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 300, -1, -1));
 
         lbl_fondoCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotos/NaranjaOscuro.jpg"))); // NOI18N
         jd_citas.getContentPane().add(lbl_fondoCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 850, 480));
@@ -479,14 +586,8 @@ public class Login extends javax.swing.JFrame {
         lbl_nomClienteCitaMod.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_nomClienteCitaMod.setForeground(new java.awt.Color(255, 255, 255));
         lbl_nomClienteCitaMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_nomClienteCitaMod.setText("Nombre del Cliente");
+        lbl_nomClienteCitaMod.setText("Id Cita:");
         jd_ModificarEstado.getContentPane().add(lbl_nomClienteCitaMod, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
-
-        lbl_PlacaCarroCitaMod.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lbl_PlacaCarroCitaMod.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_PlacaCarroCitaMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_PlacaCarroCitaMod.setText("Placa del Carro");
-        jd_ModificarEstado.getContentPane().add(lbl_PlacaCarroCitaMod, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 120, -1));
 
         lbl_EstadoActual.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_EstadoActual.setForeground(new java.awt.Color(255, 255, 255));
@@ -494,9 +595,7 @@ public class Login extends javax.swing.JFrame {
         lbl_EstadoActual.setText("Estado Actual");
         jd_ModificarEstado.getContentPane().add(lbl_EstadoActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 120, -1));
 
-        jd_ModificarEstado.getContentPane().add(cb_NombreClienteModEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 170, -1));
-
-        jd_ModificarEstado.getContentPane().add(cb_PlacaModEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 170, -1));
+        jd_ModificarEstado.getContentPane().add(cb_modificar_estado_cita, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 170, -1));
 
         txt_EstadoActualCita.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_EstadoActualCita.setEnabled(false);
@@ -508,6 +607,7 @@ public class Login extends javax.swing.JFrame {
         lbl_NuevoEstado.setText("Nuevo Estado");
         jd_ModificarEstado.getContentPane().add(lbl_NuevoEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, -1, -1));
 
+        cb_EstadoCitaMod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NO INGRESADO", "INGRESADO", "EN REPARACIÓN", "EN MANTENIMIENTO", "PENDIENTE DE REPUESTOS", "LISTO", "AUTO RETIRADO", "CANCELADA" }));
         jd_ModificarEstado.getContentPane().add(cb_EstadoCitaMod, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 180, -1));
 
         btn_ModificarEstado.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -516,6 +616,63 @@ public class Login extends javax.swing.JFrame {
 
         lbl_fondoModEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotos/ColorAzul.jpg"))); // NOI18N
         jd_ModificarEstado.getContentPane().add(lbl_fondoModEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 300));
+
+        jLabel7.setText("Placa");
+
+        jLabel8.setText("Modelo");
+
+        jLabel9.setText("Numero Motor");
+
+        jButton3.setText("Ingresar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        tf_modelo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        javax.swing.GroupLayout jd_automovilLayout = new javax.swing.GroupLayout(jd_automovil.getContentPane());
+        jd_automovil.getContentPane().setLayout(jd_automovilLayout);
+        jd_automovilLayout.setHorizontalGroup(
+            jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_automovilLayout.createSequentialGroup()
+                .addGroup(jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_automovilLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_placa, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(tf_num_motor)
+                            .addComponent(tf_modelo)))
+                    .addGroup(jd_automovilLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jButton3)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jd_automovilLayout.setVerticalGroup(
+            jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_automovilLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(tf_placa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(tf_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_automovilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(tf_num_motor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -634,6 +791,108 @@ public class Login extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_asesores_agregarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (tf_id_cliente_cita.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El campo id_cliente esta vacio");
+        } else {
+            jd_automovil.pack();
+            jd_automovil.setModal(rootPaneCheckingEnabled);
+            jd_automovil.setVisible(true);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            if (cb_clientes.getSelectedItem() instanceof Clientes && tf_id_cliente_cita.getText().equals("")) {
+                String placa, modelo, num_motor, id_cliente;
+                placa = tf_placa.getText();
+                modelo = tf_modelo.getText();
+                num_motor = tf_num_motor.getText();
+                id_cliente = ((Clientes) cb_clientes.getSelectedItem()).getId_Cliente();
+                String sql = "INSERT INTO empleado " + "(Placa, Modelo, Numero_motor, Id_Cliente)"
+                        + "values  ('" + placa + "','" + modelo + "','" + num_motor + "','" + id_cliente + "')";
+                myStmt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(this, "Automovil Agregado exitosamente");
+                CargarAutomoviles();
+                LLenarAutomovilComboBox(((Clientes) cb_clientes.getSelectedItem()));
+            } else if (cb_clientes.getSelectedIndex() == 0 && !tf_id_cliente_cita.getText().equals("")) {
+                String placa, modelo, num_motor, id_cliente;
+                placa = tf_placa.getText();
+                modelo = tf_modelo.getText();
+                num_motor = tf_num_motor.getText();
+                id_cliente = tf_id_cliente_cita.getText();
+                String sql = "INSERT INTO empleado " + "(Placa, Modelo, Numero_motor, Id_Cliente)"
+                        + "values  ('" + placa + "','" + modelo + "','" + num_motor + "','" + id_cliente + "')";
+                myStmt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(this, "Automovil Agregado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "llene el campo id_cliente");
+            }
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cb_clientesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_clientesItemStateChanged
+        // TODO add your handling code here:
+        if (cb_clientes.getSelectedIndex() == 0) {
+            tf_id_cliente_cita.setText("");
+            tf_primer_nombre_cliente.setText("");
+            tf_segundo_nombre_cliente.setText("");
+            tf_primer_apellido_cliente.setText("");
+            tf_segundo_apellido_cliente.setText("");
+            tf_num_telefono_cita.setText("");
+            tf_email_cliente.setText("");
+            cb_automoviles.setSelectedIndex(0);
+        } else {
+            tf_id_cliente_cita.setText(((Clientes) cb_clientes.getSelectedItem()).getId_Cliente());
+            tf_primer_nombre_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getPrimer_nombre());
+            tf_segundo_nombre_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getSegundo_nombre());
+            tf_primer_apellido_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getPrimer_apellido());
+            tf_segundo_apellido_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getSegundo_Apellido());
+            tf_num_telefono_cita.setText(((Clientes) cb_clientes.getSelectedItem()).getTelefono());
+            tf_email_cliente.setText(((Clientes) cb_clientes.getSelectedItem()).getEmail());
+            LLenarAutomovilComboBox((Clientes)cb_clientes.getSelectedItem());
+        }
+
+    }//GEN-LAST:event_cb_clientesItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        CrearCliente(tf_id_cliente_cita.getText(), tf_primer_nombre.getText(), tf_segundo_nombre_cliente.getText(), tf_primer_apellido_cliente.getText(), 
+                tf_segundo_apellido_cliente.getText(), tf_Direccion.getText(), tf_num_telefono_cita.getText(), tf_email_cliente.getText());
+        CargarClientes();
+        LLenarClientesComboBox();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_AgregarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarCitaActionPerformed
+        // TODO add your handling code here:
+        String Id_Cita, Nombre_Cliente, Num_telefono, Tipo_Cita, Fecha_hora_entrada;
+        Date Fecha_entrega;
+        String Estado, Cliente_Id_Cliente, Id_empleado_cita, Automovil_placa, id_CitaMantenimiento, id_CitaReparacion;
+//        String sql = "INSERT INTO cita " + "(Id_Cita, Nombre_Cliente, Num_telefono, Tipo_cita, Fecha_hora_entrada, Fecha_entrega, Estado, Cliente_Id_Cliente, Id_empleado_cita, Automovil_Placa, id_CitaMantenimiento, id_CitaReparacion)"
+//                        + "values  ('" + placa + "','" + modelo + "','" + num_motor + "','" + id_cliente + "')";
+//                myStmt.executeUpdate(sql);
+//                JOptionPane.showMessageDialog(this, "Automovil Agregado exitosamente");
+        
+    }//GEN-LAST:event_btn_AgregarCitaActionPerformed
+
+    private void rb_mantenimientoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rb_mantenimientoItemStateChanged
+        // TODO add your handling code here:
+        cb_mantenimiento.setVisible(true);
+        cb_reparacion.setVisible(false);
+    }//GEN-LAST:event_rb_mantenimientoItemStateChanged
+
+    private void rb_reparacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rb_reparacionItemStateChanged
+        // TODO add your handling code here:
+        cb_mantenimiento.setVisible(false);
+        cb_reparacion.setVisible(true);
+    }//GEN-LAST:event_rb_reparacionItemStateChanged
     public void SendMail() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -778,6 +1037,15 @@ public class Login extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void AsignarCarros(){
+        for (int i = 0; i < clientes.size(); i++) {
+            for (int j = 0; j < automoviles.size(); j++) {
+                if (clientes.get(i).getId_Cliente().equals(automoviles.get(j).getId_cliente())) {
+                    clientes.get(i).setCarros(automoviles.get(j));
+                }
+            }
+        }
+    }
 
     public void LLenarAsesoresComboBox() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -788,7 +1056,14 @@ public class Login extends javax.swing.JFrame {
         cb_asesor.setModel(model);
         cb_asesor_eliminar.setModel(model);
     }
-
+    public void LLenarClientesComboBox(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("--Seleccione un Cliente--");
+        for (int i = 0; i < clientes.size(); i++) {
+            model.addElement(clientes.get(i));
+        }
+        cb_clientes.setModel(model);
+    }
     public void LLenarMecanicosComboBox() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("--Seleccione un Mecanico--");
@@ -798,7 +1073,50 @@ public class Login extends javax.swing.JFrame {
         cb_mecanico.setModel(model);
         cb_mecanico_eliminar.setModel(model);
     }
-
+    public void LLenarAutomovilComboBox(Clientes cliente){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("--Seleccione un Automovil--");
+        for (int i = 0; i < cliente.getCarros().size(); i++) {
+            model.addElement(cliente.getCarros().get(i));
+        }
+        cb_automoviles.setModel(model);
+    }
+    public void CargarMantenimiento(){
+        try {
+            //llenando cb_mantenimiento
+            String idCitaMantenimiento;
+            String tipo_mantenimiento;
+            String sql2 = "SELECT * FROM mantenimiento";
+            ResultSet rs = myStmt.executeQuery(sql2);
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            while (rs.next()) {
+                idCitaMantenimiento = rs.getNString("Placa");
+                tipo_mantenimiento = rs.getString("Modelo");
+                model.addElement(tipo_mantenimiento);
+            }
+          cb_mantenimiento.setModel(model);  
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void CargarReparacion(){
+        try {
+            //llenando cb_mantenimiento
+            String idCitaReparacion;
+            String tipo_reparacion;
+            String sql2 = "SELECT * FROM reparacion";
+            ResultSet rs = myStmt.executeQuery(sql2);
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            while (rs.next()) {
+                idCitaReparacion = rs.getNString("Placa");
+                tipo_reparacion = rs.getString("Modelo");
+                model.addElement(tipo_reparacion);
+            }
+          cb_reparacion.setModel(model);  
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void SepararMecanicosAsesore() {
         //separando los mecanicos y asesores
         for (int i = 0; i < empleados.size(); i++) {
@@ -810,8 +1128,9 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
-    public void CrearCliente(String Id_Cliente, String Primer_Nombre, String Segundo_Nombre, String Primer_Apellido, String Segundo_Apellido, String Direccion, String Num_telefono, String email) {
-        try(PreparedStatement pstm = myConn.prepareStatement("{call INSERTAR_CLIENTES (?,?,?,?,?,?,?,?)}")){
+    public void CrearCliente(String Id_Cliente, String Primer_Nombre, String Segundo_Nombre, String Primer_Apellido, String Segundo_Apellido, String Direccion, 
+            String Num_telefono, String email) {
+        try (PreparedStatement pstm = myConn.prepareStatement("{call INSERTAR_CLIENTES (?,?,?,?,?,?,?,?)}")) {
             pstm.setString(1, Id_Cliente);
             pstm.setString(2, Primer_Nombre);
             pstm.setString(3, Segundo_Nombre);
@@ -821,23 +1140,25 @@ public class Login extends javax.swing.JFrame {
             pstm.setString(7, Num_telefono);
             pstm.setString(8, email);
             ResultSet rs = pstm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 System.out.println(rs.getString("Id_Cliente"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void EliminarCliente(String Id_Cliente){
-        try(PreparedStatement pstm = myConn.prepareStatement("{call ELIMINAR_CLIENTES (?)}")){
+
+    public void EliminarCliente(String Id_Cliente) {
+        try (PreparedStatement pstm = myConn.prepareStatement("{call ELIMINAR_CLIENTES (?)}")) {
             pstm.setString(1, Id_Cliente);
             pstm.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void ModificarCliente(String Id_Cliente, String Primer_Nombre, String Segundo_Nombre, String Primer_Apellido, String Segundo_Apellido, String Direccion, String Num_telefono, String email) {
-        try(PreparedStatement pstm = myConn.prepareStatement("{call MODIFICAR_CLIENTES (?,?,?,?,?,?,?,?)}")){
+        try (PreparedStatement pstm = myConn.prepareStatement("{call MODIFICAR_CLIENTES (?,?,?,?,?,?,?,?)}")) {
             pstm.setString(1, Id_Cliente);
             pstm.setString(2, Primer_Nombre);
             pstm.setString(3, Segundo_Nombre);
@@ -847,14 +1168,14 @@ public class Login extends javax.swing.JFrame {
             pstm.setString(7, Num_telefono);
             pstm.setString(8, email);
             ResultSet rs = pstm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 System.out.println(rs.getString("Id_Cliente"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_AgregarCita;
@@ -869,22 +1190,39 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btn_login_ingresar;
     private javax.swing.JButton btn_mecanico_agregar;
     private javax.swing.JButton btn_mecanico_modif;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cb_EstadoAgregarCita;
     private javax.swing.JComboBox<String> cb_EstadoCitaMod;
-    private javax.swing.JComboBox<String> cb_NombreClienteModEstado;
-    private javax.swing.JComboBox<String> cb_PlacaModEstado;
     private javax.swing.JComboBox<String> cb_asesor;
     private javax.swing.JComboBox<String> cb_asesor_eliminar;
+    private javax.swing.JComboBox<String> cb_automoviles;
+    private javax.swing.JComboBox<String> cb_clientes;
+    private javax.swing.JComboBox<String> cb_mantenimiento;
     private javax.swing.JComboBox<String> cb_mecanico;
     private javax.swing.JComboBox<String> cb_mecanico_eliminar;
+    private javax.swing.JComboBox<String> cb_modificar_estado_cita;
+    private javax.swing.JComboBox<String> cb_reparacion;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JDialog jd_ModificarEstado;
     private javax.swing.JDialog jd_admin_asesores;
     private javax.swing.JDialog jd_admin_mecanicos;
     private javax.swing.JDialog jd_administador;
+    private javax.swing.JDialog jd_automovil;
     private javax.swing.JDialog jd_citas;
     private org.jdesktop.swingx.JXDatePicker jd_entrada;
     private org.jdesktop.swingx.JXDatePicker jd_entrega;
@@ -900,8 +1238,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_NumTelMec;
     private javax.swing.JLabel lbl_PapMec;
     private javax.swing.JLabel lbl_Password;
-    private javax.swing.JLabel lbl_PlacaCarroCitaMod;
-    private javax.swing.JLabel lbl_Recorrido;
     private javax.swing.JLabel lbl_SApMec;
     private javax.swing.JLabel lbl_SNomMec;
     private javax.swing.JLabel lbl_SnomCi;
@@ -920,7 +1256,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_mecanico;
     private javax.swing.JLabel lbl_modAses;
     private javax.swing.JLabel lbl_modEst;
-    private javax.swing.JLabel lbl_nomClie;
     private javax.swing.JLabel lbl_nomClienteCitaMod;
     private javax.swing.JLabel lbl_numTelAse;
     private javax.swing.JLabel lbl_pNom;
@@ -931,12 +1266,22 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_pnomAes;
     private javax.swing.JLabel lbl_sapAses;
     private javax.swing.JLabel lbl_sapci;
+    private javax.swing.JLabel lbl_sapci1;
     private javax.swing.JLabel lbl_snomAse;
     private javax.swing.JLabel lbl_tipoRep;
     private javax.swing.JLabel lbl_user;
+    private javax.swing.JRadioButton rb_mantenimiento;
+    private javax.swing.JRadioButton rb_reparacion;
+    private javax.swing.JSpinner sp_hora_citas;
+    private javax.swing.JTextField tf_Direccion;
+    private javax.swing.JTextField tf_email_cliente;
     private javax.swing.JTextField tf_id;
+    private javax.swing.JTextField tf_id_cliente_cita;
     private javax.swing.JTextField tf_ida;
+    private javax.swing.JFormattedTextField tf_modelo;
+    private javax.swing.JTextField tf_num_motor;
     private javax.swing.JTextField tf_num_telefono;
+    private javax.swing.JTextField tf_num_telefono_cita;
     private javax.swing.JTextField tf_num_telefonoa;
     private javax.swing.JTextField tf_placa;
     private javax.swing.JTextField tf_primer_apellido;
@@ -945,16 +1290,14 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField tf_primer_nombre;
     private javax.swing.JTextField tf_primer_nombre_cliente;
     private javax.swing.JTextField tf_primer_nombrea;
-    private javax.swing.JTextField tf_recorrido;
+    private javax.swing.JTextField tf_seguimiento;
     private javax.swing.JTextField tf_segundo_apellido;
-    private javax.swing.JTextField tf_segundo_apellido_cliiente;
+    private javax.swing.JTextField tf_segundo_apellido_cliente;
     private javax.swing.JTextField tf_segundo_apellidoa;
     private javax.swing.JTextField tf_segundo_nombre;
     private javax.swing.JTextField tf_segundo_nombre_cliente;
     private javax.swing.JTextField tf_segundo_nombrea;
     private javax.swing.JTextField txt_EstadoActualCita;
-    private javax.swing.JTextField txt_TelefonoCita;
-    private javax.swing.JTextField txt_TipoReparacion;
     private javax.swing.JPasswordField txt_login_password;
     private javax.swing.JTextField txt_login_user;
     // End of variables declaration//GEN-END:variables
