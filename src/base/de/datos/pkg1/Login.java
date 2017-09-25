@@ -48,6 +48,9 @@ public class Login extends javax.swing.JFrame {
         
         cb_mantenimiento.setVisible(false);
         cb_reparacion.setVisible(false);
+        CargarEmpleados();
+        SepararMecanicosAsesores();
+        LLenarAsesoresComboBox();
     }//Fin del constructor general
 
     @SuppressWarnings("unchecked")
@@ -761,9 +764,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AsesoresActionPerformed
 
     private void btn_MecanicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MecanicosActionPerformed
+        
         jd_admin_mecanicos.setModal(true);
         jd_admin_mecanicos.pack();
         jd_admin_mecanicos.setVisible(true);
+        
     }//GEN-LAST:event_btn_MecanicosActionPerformed
 
     private void btn_ModificarEstadoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarEstadoCitaActionPerformed
@@ -775,11 +780,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ModificarEstadoCitaActionPerformed
 
     private void btn_mecanico_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mecanico_agregarActionPerformed
-        try {
-            // TODO add your handling code here:
-            
-            LLenarAsesoresComboBox();
-            String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, Empleado_id_Asesor;
+            String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, Empleado_id_Asesor, password ="", usuario ="";
             id_empleado = tf_id.getText();
             primer_nombre = tf_primer_nombre.getText();
             segundo_nombre = tf_segundo_nombre.getText();
@@ -787,9 +788,13 @@ public class Login extends javax.swing.JFrame {
             segundo_apellido = tf_segundo_apellido.getText();
             num_telefono = tf_num_telefono.getText();
             Empleado_id_Asesor = ((Empleado)cb_asignar_asesor.getSelectedItem()).getId_Empleado();
+            System.out.println("ccombobox" +Empleado_id_Asesor);
+        try {
+            // TODO add your handling code here:
+            
 
-            String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor)"
-                    + "values  ('" + id_empleado + "','" + primer_nombre + "','" + segundo_nombre + "','" + primer_apellido + "','" + segundo_apellido + "','" + num_telefono + "','" + Empleado_id_Asesor + "')";
+            String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor, Password, User)"
+                    + "values  ('" + id_empleado + "','" + primer_nombre + "','" + segundo_nombre + "','" + primer_apellido + "','" + segundo_apellido + "','" + num_telefono + "','" + id_empleado + "','" + password + "','" + usuario + "')";
             myStmt.executeUpdate(sql);
             JOptionPane.showMessageDialog(this, "Mecanico Agregado exitosamente");
             tf_id.setText("");
@@ -801,6 +806,7 @@ public class Login extends javax.swing.JFrame {
             CargarEmpleados();
             SepararMecanicosAsesores();
             LLenarAsesoresComboBox();
+            LLenarMecanicosComboBox();
             
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
