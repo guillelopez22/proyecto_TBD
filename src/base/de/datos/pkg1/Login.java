@@ -31,21 +31,21 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        
+
         System.out.println("hola");
         try {
             System.out.println("dsqqwq");
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/DB_Taller?useSSL=true", "root", "FreePeriods123");            
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/DB_Taller?useSSL=true", "root", "FreePeriods123");
             myStmt = myConn.createStatement();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }//Fin del try catch
-        
+
         this.setTitle("Login");
         this.setLocationRelativeTo(null);
         System.out.println("");
-        
+
         cb_mantenimiento.setVisible(false);
         cb_reparacion.setVisible(false);
         CargarEmpleados();
@@ -735,7 +735,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_login_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_login_ingresarActionPerformed
-        
+
         String user = txt_login_user.getText();
         String password = txt_login_password.getText();
         if (user.contentEquals("admin") && password.contentEquals("1234")) {
@@ -753,8 +753,8 @@ public class Login extends javax.swing.JFrame {
 //                }
 //            }
 //        }
-        
-        
+
+
     }//GEN-LAST:event_btn_login_ingresarActionPerformed
 
     private void btn_AsesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AsesoresActionPerformed
@@ -764,11 +764,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AsesoresActionPerformed
 
     private void btn_MecanicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MecanicosActionPerformed
-        
+        LLenarMecanicosComboBox();
         jd_admin_mecanicos.setModal(true);
         jd_admin_mecanicos.pack();
         jd_admin_mecanicos.setVisible(true);
-        
+
     }//GEN-LAST:event_btn_MecanicosActionPerformed
 
     private void btn_ModificarEstadoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarEstadoCitaActionPerformed
@@ -780,18 +780,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ModificarEstadoCitaActionPerformed
 
     private void btn_mecanico_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mecanico_agregarActionPerformed
-            String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, Empleado_id_Asesor, password ="", usuario ="";
-            id_empleado = tf_id.getText();
-            primer_nombre = tf_primer_nombre.getText();
-            segundo_nombre = tf_segundo_nombre.getText();
-            primer_apellido = tf_primer_apellido.getText();
-            segundo_apellido = tf_segundo_apellido.getText();
-            num_telefono = tf_num_telefono.getText();
-            Empleado_id_Asesor = ((Empleado)cb_asignar_asesor.getSelectedItem()).getId_Empleado();
-            System.out.println("ccombobox" +Empleado_id_Asesor);
+        String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, Empleado_id_Asesor, password = "", usuario = "";
+        id_empleado = tf_id.getText();
+        primer_nombre = tf_primer_nombre.getText();
+        segundo_nombre = tf_segundo_nombre.getText();
+        primer_apellido = tf_primer_apellido.getText();
+        segundo_apellido = tf_segundo_apellido.getText();
+        num_telefono = tf_num_telefono.getText();
+        Empleado_id_Asesor = ((Empleado) cb_asignar_asesor.getSelectedItem()).getId_Empleado();
+        System.out.println("ccombobox" + Empleado_id_Asesor);
         try {
             // TODO add your handling code here:
-            
 
             String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor, Password, User)"
                     + "values  ('" + id_empleado + "','" + primer_nombre + "','" + segundo_nombre + "','" + primer_apellido + "','" + segundo_apellido + "','" + num_telefono + "','" + id_empleado + "','" + password + "','" + usuario + "')";
@@ -803,27 +802,29 @@ public class Login extends javax.swing.JFrame {
             tf_primer_apellido.setText("");
             tf_segundo_apellido.setText("");
             tf_num_telefono.setText("");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
             CargarEmpleados();
             SepararMecanicosAsesores();
             LLenarAsesoresComboBox();
             LLenarMecanicosComboBox();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_btn_mecanico_agregarActionPerformed
 
     private void btn_asesores_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asesores_agregarActionPerformed
+        String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, usuario, password;
+        id_empleado = tf_ida.getText();
+        primer_nombre = tf_primer_nombrea.getText();
+        segundo_nombre = tf_segundo_nombrea.getText();
+        primer_apellido = tf_primer_apellidoa.getText();
+        segundo_apellido = tf_segundo_apellidoa.getText();
+        num_telefono = tf_num_telefonoa.getText();
+        usuario = tf_usuario.getText();
+        password = tf_password.getText();
         try {
-            String id_empleado, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono, usuario, password;
-            id_empleado = tf_ida.getText();
-            primer_nombre = tf_primer_nombrea.getText();
-            segundo_nombre = tf_segundo_nombrea.getText();
-            primer_apellido = tf_primer_apellidoa.getText();
-            segundo_apellido = tf_segundo_apellidoa.getText();
-            num_telefono = tf_num_telefonoa.getText();
-            usuario = tf_usuario.getText();
-            password = tf_password.getText();
+
             String sql = "INSERT INTO empleado " + "(Id_Empleado, Primer_Nombre, Segundo_nombre, Primer_Apellido, Segundo_Apellido, Tel_asignado, Empleado_Id_Asesor, Password, User)"
                     + "values  ('" + id_empleado + "','" + primer_nombre + "','" + segundo_nombre + "','" + primer_apellido + "','" + segundo_apellido + "','" + num_telefono + "','" + id_empleado + "','" + password + "','" + usuario + "')";
             myStmt.executeUpdate(sql);
@@ -834,12 +835,13 @@ public class Login extends javax.swing.JFrame {
             tf_primer_apellido.setText("");
             tf_segundo_apellido.setText("");
             tf_num_telefono.setText("");
-            CargarEmpleados();
-            SepararMecanicosAsesores();
-            LLenarAsesoresComboBox();
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+            CargarEmpleados();
+            SepararMecanicosAsesores();
+            LLenarAsesoresComboBox();
     }//GEN-LAST:event_btn_asesores_agregarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -992,6 +994,7 @@ public class Login extends javax.swing.JFrame {
             throw new RuntimeException(e);
         }
     }
+
     public void CargarClientes() {
         try {
             //llenando ArrayList de Clientes
@@ -1029,7 +1032,7 @@ public class Login extends javax.swing.JFrame {
     public void CargarEmpleados() {
         try {
             //llenando ArrayList de empleados
-            empleados = new ArrayList();
+            mecanicos = new ArrayList();
             Empleado combo;
             String empleado_id = "";
             String id_empleado;
@@ -1050,7 +1053,7 @@ public class Login extends javax.swing.JFrame {
                 num_telefono = rs.getString("Tel_asignado");
                 empleado_id = rs.getString("Empleado_Id_Asesor");
                 combo = new Empleado(id_empleado, empleado_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, num_telefono);
-                empleados.add(combo);
+                mecanicos.add(combo);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1112,13 +1115,13 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void LLenarMecanicosComboBox() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        model.addElement("--Seleccione un Mecanico--");
+        DefaultComboBoxModel model1 = new DefaultComboBoxModel();
+        model1.addElement("--Seleccione un Mecanico--");
         for (int i = 0; i < mecanicos.size(); i++) {
-            model.addElement(mecanicos.get(i));
+            model1.addElement(mecanicos.get(i));
         }
-        cb_mecanico.setModel(model);
-        cb_mecanico_eliminar.setModel(model);
+        cb_mecanico.setModel(model1);
+        cb_mecanico_eliminar.setModel(model1);
     }
 
     public void LLenarAutomovilComboBox(Clientes cliente) {
@@ -1170,18 +1173,22 @@ public class Login extends javax.swing.JFrame {
 
     public void SepararMecanicosAsesores() {
         //separando los mecanicos y asesores
-        System.out.println("test");
-        for (int i = 0; i < empleados.size(); i++) {
-            System.out.println(empleados.get(i));
-        }
         System.out.println("fin test");
-        for (int i = 0; i < empleados.size(); i++) {
-            if (empleados.get(i).getId_Empleado().equals("AS"+Integer.toString(i+1))) {
-                System.out.println(empleados.get(i));
-                asesores.add(empleados.get(i));
+        for (int i = 0; i < mecanicos.size(); i++) {
+            if (mecanicos.get(i).getId_Empleado().equals("AS" + Integer.toString(i + 1))) {
+                System.out.println(mecanicos.get(i));
+                asesores.add(mecanicos.remove(i));
             }
         }
-        
+        System.out.println("Mecanicos");
+        for (int i = 0; i < mecanicos.size(); i++) {
+            System.out.println(mecanicos.get(i));
+        }
+        System.out.println("Asesores");
+        for (int i = 0; i < asesores.size(); i++) {
+            System.out.println(asesores.get(i));
+        }
+
     }
 
     public void CrearCliente(String Id_Cliente, String Primer_Nombre, String Segundo_Nombre, String Primer_Apellido, String Segundo_Apellido, String Direccion,
@@ -1257,11 +1264,10 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
-                
+
             }
         });
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1394,9 +1400,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_login_password;
     private javax.swing.JTextField txt_login_user;
     // End of variables declaration//GEN-END:variables
-    ArrayList<Empleado> empleados = new ArrayList();
     ArrayList<Empleado> mecanicos = new ArrayList();
     ArrayList<Empleado> asesores = new ArrayList();
-    ArrayList<Automovil> automoviles = new ArrayList();;
-    ArrayList<Clientes> clientes = new ArrayList();;
+    ArrayList<Automovil> automoviles = new ArrayList();
+    ;
+    ArrayList<Clientes> clientes = new ArrayList();
+;
 }//FIn de la clase
